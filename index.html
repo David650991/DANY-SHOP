@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Sistema de gestión integral DANY-SHOP: control de inventario, ventas, clientes, créditos y reportes en tiempo real para pequeñas empresas.">
+  <meta name="keywords" content="sistema de gestión, tienda, inventario, ventas, crédito, deudas, reportes, pequeña empresa, DANY-SHOP">
+  <meta name="author" content="DANY-SHOP">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="DANY-SHOP - Sistema de Gestión para Pequeños Negocios">
+  <meta property="og:description" content="Sistema completo para gestionar tu tienda: inventario, ventas, clientes y reportes financieros.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://ejemplo.com/dany-shop-preview.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DANY-SHOP - Sistema de Gestión">
+  <meta name="twitter:description" content="Sistema completo para gestionar tu tienda">
+  
+  <title>DANY-SHOP - Sistema de Gestión para Pequeños Negocios</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛒</text></svg>">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- CSS externo -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Loading Screen -->
+  <div id="loading-screen" class="loading-screen">
+    <div class="loading-spinner">
+      <i class="fas fa-store"></i>
+      <p>Cargando DANY-SHOP...</p>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <h1><i class="fas fa-store" aria-hidden="true"></i> DANY-SHOP</h1>
+      <div class="header-controls">
+        <button id="btn-notifications" class="btn-icon" aria-label="Notificaciones">
+          <i class="fas fa-bell"></i>
+          <span id="notification-badge" class="notification-badge hidden">0</span>
+        </button>
+        <button id="btn-tema" class="btn-icon" aria-label="Cambiar tema">
+          <i class="fas fa-moon"></i>
+        </button>
+        <button id="btn-menu-movil" class="btn-icon menu-movil" aria-label="Menú móvil">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navegación principal -->
+    <nav aria-label="Menú principal de funcionalidades" id="navegacion-principal">
+      <div class="nav-scroll-container">
+        <div class="nav-container">
+          <button class="nav-btn" data-panel="alta-cliente">
+            <i class="fas fa-user-plus" aria-hidden="true"></i>
+            <span>Alta de Cliente</span>
+          </button>
+          <button class="nav-btn" data-panel="consulta-deuda">
+            <i class="fas fa-file-invoice-dollar" aria-hidden="true"></i>
+            <span>Consulta de Deuda</span>
+          </button>
+          <button class="nav-btn" data-panel="historial-compras">
+            <i class="fas fa-history" aria-hidden="true"></i>
+            <span>Historial</span>
+          </button>
+          <button class="nav-btn highlight" data-panel="venta">
+            <i class="fas fa-cash-register" aria-hidden="true"></i>
+            <span>Registrar Venta</span>
+          </button>
+          <button class="nav-btn" data-panel="inventario">
+            <i class="fas fa-boxes" aria-hidden="true"></i>
+            <span>Inventario</span>
+          </button>
+          <button class="nav-btn" data-panel="top-mas-vendido">
+            <i class="fas fa-chart-line" aria-hidden="true"></i>
+            <span>Más Vendido</span>
+          </button>
+          <button class="nav-btn" data-panel="top-menos-vendido">
+            <i class="fas fa-chart-bar" aria-hidden="true"></i>
+            <span>Menos Vendido</span>
+          </button>
+          <button class="nav-btn" data-panel="alta-producto">
+            <i class="fas fa-plus-circle" aria-hidden="true"></i>
+            <span>Alta Producto</span>
+          </button>
+          <button class="nav-btn" data-panel="costos-ganancias">
+            <i class="fas fa-calculator" aria-hidden="true"></i>
+            <span>Costos</span>
+          </button>
+          <button class="nav-btn warning" data-panel="clientes-atraso">
+            <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+            <span>Clientes Atraso</span>
+          </button>
+          <button class="nav-btn" data-panel="credito-disponible">
+            <i class="fas fa-credit-card" aria-hidden="true"></i>
+            <span>Crédito</span>
+          </button>
+        </div>
+      </div>
+      <div class="nav-scroll-indicator left hidden">
+        <i class="fas fa-chevron-left"></i>
+      </div>
+      <div class="nav-scroll-indicator right hidden">
+        <i class="fas fa-chevron-right"></i>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Panel de Control Principal -->
+    <section id="dashboard" class="panel active">
+      <h2><i class="fas fa-tachometer-alt" aria-hidden="true"></i> Panel de Control</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="stat-info">
+            <h3 id="total-clientes">0</h3>
+            <p>Clientes Registrados</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-box"></i>
+          </div>
+          <div class="stat-info">
+            <h3 id="total-productos">0</h3>
+            <p>Productos en Inventario</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-shopping-cart"></i>
+          </div>
+          <div class="stat-info">
+            <h3 id="total-ventas">0</h3>
+            <p>Ventas Realizadas</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon warning">
+            <i class="fas fa-exclamation-circle"></i>
+          </div>
+          <div class="stat-info">
+            <h3 id="total-deuda">$0</h3>
+            <p>Deuda Pendiente</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gráficos rápidos -->
+      <div class="charts-container">
+        <div class="chart-card">
+          <h3>Ventas de la Semana</h3>
+          <div id="chart-ventas" class="chart-placeholder">
+            <p>No hay datos de ventas esta semana</p>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3>Productos con Stock Bajo</h3>
+          <div id="chart-stock" class="chart-placeholder">
+            <p>No hay productos con stock bajo</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accesos rápidos -->
+      <div class="quick-actions">
+        <h3>Acciones Rápidas</h3>
+        <div class="quick-actions-grid">
+          <button class="quick-action-btn" data-action="venta">
+            <i class="fas fa-cash-register"></i>
+            <span>Nueva Venta</span>
+          </button>
+          <button class="quick-action-btn" data-action="alta-producto">
+            <i class="fas fa-plus-circle"></i>
+            <span>Agregar Producto</span>
+          </button>
+          <button class="quick-action-btn" data-action="alta-cliente">
+            <i class="fas fa-user-plus"></i>
+            <span>Nuevo Cliente</span>
+          </button>
+          <button class="quick-action-btn" data-action="inventario">
+            <i class="fas fa-boxes"></i>
+            <span>Ver Inventario</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resto de las secciones -->
+    <!-- Alta de Cliente -->
+    <section id="alta-cliente" class="panel oculto" aria-labelledby="titulo-alta-cliente">
+      <h2 id="titulo-alta-cliente"><i class="fas fa-user-plus" aria-hidden="true"></i> Alta de Cliente Nuevo</h2>
+      <form id="form-alta-cliente" class="modern-form">
+        <div class="form-group">
+          <label for="nombre-cliente">Nombre completo:</label>
+          <input type="text" id="nombre-cliente" required autocomplete="name" />
+        </div>
+        <div class="form-group">
+          <label for="folio-cliente">Folio único (ej. CLI-001):</label>
+          <input type="text" id="folio-cliente" required autocomplete="off" />
+        </div>
+        <div class="form-group">
+          <label for="telefono-cliente">Teléfono (opcional):</label>
+          <input type="tel" id="telefono-cliente" autocomplete="tel" />
+        </div>
+        <div class="form-group">
+          <label for="email-cliente">Email (opcional):</label>
+          <input type="email" id="email-cliente" autocomplete="email" />
+        </div>
+        <div class="form-actions">
+          <button type="button" id="btn-limpiar-cliente" class="btn-secondary">
+            <i class="fas fa-broom"></i> Limpiar
+          </button>
+          <button type="submit" class="btn-primary">
+            <i class="fas fa-save" aria-hidden="true"></i> Registrar Cliente
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Consulta de Deuda -->
+    <section id="consulta-deuda" class="panel oculto" aria-labelledby="titulo-consulta-deuda">
+      <h2 id="titulo-consulta-deuda"><i class="fas fa-file-invoice-dollar" aria-hidden="true"></i> Consulta de Deuda del Cliente</h2>
+      <form id="form-consulta-deuda" class="modern-form">
+        <div class="form-group">
+          <label for="folio-deuda">Folio del cliente:</label>
+          <input type="text" id="folio-deuda" required />
+        </div>
+        <button type="submit" class="btn-primary">
+          <i class="fas fa-search" aria-hidden="true"></i> Consultar
+        </button>
+      </form>
+      <div id="resultado-deuda" aria-live="polite"></div>
+    </section>
+
+    <!-- Historial de Compras -->
+    <section id="historial-compras" class="panel oculto" aria-labelledby="titulo-historial-compras">
+      <h2 id="titulo-historial-compras"><i class="fas fa-history" aria-hidden="true"></i> Historial de Compras</h2>
+      <form id="form-historial-compras" class="modern-form">
+        <div class="form-group">
+          <label for="folio-historial">Folio del cliente:</label>
+          <input type="text" id="folio-historial" required />
+        </div>
+        <button type="submit" class="btn-primary">
+          <i class="fas fa-search" aria-hidden="true"></i> Ver Historial
+        </button>
+      </form>
+      <div id="resultado-historial" aria-live="polite"></div>
+    </section>
+
+    <!-- Registrar Venta -->
+    <section id="venta" class="panel oculto" aria-labelledby="titulo-venta">
+      <h2 id="titulo-venta"><i class="fas fa-cash-register" aria-hidden="true"></i> Registrar Venta</h2>
+      <form id="form-venta" class="modern-form">
+        <div class="form-group">
+          <label for="folio-venta">Folio del cliente (opcional para efectivo):</label>
+          <input type="text" id="folio-venta" list="clientes-lista" />
+          <datalist id="clientes-lista"></datalist>
+        </div>
+        
+        <fieldset class="form-group">
+          <legend>Tipo de Pago:</legend>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="tipo-pago" value="efectivo" checked />
+              <i class="fas fa-money-bill-wave" aria-hidden="true"></i> Efectivo
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="tipo-pago" value="credito" />
+              <i class="fas fa-credit-card" aria-hidden="true"></i> Crédito
+            </label>
+          </div>
+        </fieldset>
+        
+        <div class="form-group">
+          <label for="productos-venta">Productos (ID:cantidad, ej. 1:2, 3:1):</label>
+          <input type="text" id="productos-venta" placeholder="ej. 1:2, 3:1" required />
+          <small>Usa el formato: ID del producto:cantidad, separados por comas</small>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" id="btn-calcular-total" class="btn-secondary">
+            <i class="fas fa-calculator"></i> Calcular Total
+          </button>
+          <button type="button" id="btn-limpiar-venta" class="btn-secondary">
+            <i class="fas fa-broom"></i> Limpiar
+          </button>
+          <button type="submit" class="btn-primary">
+            <i class="fas fa-save" aria-hidden="true"></i> Registrar Venta
+          </button>
+        </div>
+        
+        <div id="preview-total" class="preview-total oculto">
+          <h3>Resumen de Venta</h3>
+          <div id="preview-productos"></div>
+          <div class="total-line">
+            <strong>Total: $<span id="preview-total-monto">0.00</span></strong>
+          </div>
+        </div>
+      </form>
+      
+      <div id="ticket-generado" aria-live="polite" class="ticket-container"></div>
+    </section>
+
+    <!-- Inventario -->
+    <section id="inventario" class="panel oculto" aria-labelledby="titulo-inventario">
+      <h2 id="titulo-inventario"><i class="fas fa-boxes" aria-hidden="true"></i> Inventario Actual</h2>
+      <div class="inventario-controls">
+        <button id="btn-refrescar-inventario" class="btn-primary">
+          <i class="fas fa-sync-alt" aria-hidden="true"></i> Refrescar Inventario
+        </button>
+        <button id="btn-exportar-inventario" class="btn-secondary">
+          <i class="fas fa-file-export"></i> Exportar
+        </button>
+      </div>
+      <div class="inventario-filtros">
+        <input type="text" id="filtro-inventario" placeholder="Filtrar productos..." class="filtro-input">
+        <div class="filter-group">
+          <button class="filter-btn active" data-filter="todos">Todos</button>
+          <button class="filter-btn" data-filter="stock-bajo">Stock Bajo</button>
+          <button class="filter-btn" data-filter="sin-stock">Sin Stock</button>
+        </div>
+      </div>
+      <div id="lista-inventario" aria-live="polite"></div>
+    </section>
+
+    <!-- Más Vendido -->
+    <section id="top-mas-vendido" class="panel oculto" aria-labelledby="titulo-top-mas">
+      <h2 id="titulo-top-mas"><i class="fas fa-chart-line" aria-hidden="true"></i> Producto Más Vendido</h2>
+      <div class="time-filter">
+        <button class="filter-btn active" data-period="semana">Semana</button>
+        <button class="filter-btn" data-period="mes">Mes</button>
+        <button class="filter-btn" data-period="anio">Año</button>
+      </div>
+      <button id="btn-calcular-top-mas" class="btn-primary">
+        <i class="fas fa-calculator" aria-hidden="true"></i> Calcular
+      </button>
+      <div id="resultado-top-mas" aria-live="polite"></div>
+    </section>
+
+    <!-- Menos Vendido -->
+    <section id="top-menos-vendido" class="panel oculto" aria-labelledby="titulo-top-menos">
+      <h2 id="titulo-top-menos"><i class="fas fa-chart-bar" aria-hidden="true"></i> Producto Menos Vendido</h2>
+      <div class="time-filter">
+        <button class="filter-btn active" data-period="semana">Semana</button>
+        <button class="filter-btn" data-period="mes">Mes</button>
+        <button class="filter-btn" data-period="anio">Año</button>
+      </div>
+      <button id="btn-calcular-top-menos" class="btn-primary">
+        <i class="fas fa-calculator" aria-hidden="true"></i> Calcular
+      </button>
+      <div id="resultado-top-menos" aria-live="polite"></div>
+    </section>
+
+    <!-- Alta de Producto -->
+    <section id="alta-producto" class="panel oculto" aria-labelledby="titulo-alta-producto">
+      <h2 id="titulo-alta-producto"><i class="fas fa-plus-circle" aria-hidden="true"></i> Alta / Gestión de Productos</h2>
+      <form id="form-alta-producto" class="modern-form">
+        <div class="form-group">
+          <label for="nombre-producto">Nombre del producto:</label>
+          <input type="text" id="nombre-producto" required />
+        </div>
+        <div class="form-group">
+          <label for="precio-costo">Precio de costo ($):</label>
+          <input type="number" id="precio-costo" step="0.01" min="0" required />
+        </div>
+        <div class="form-group">
+          <label for="precio-venta">Precio de venta ($):</label>
+          <input type="number" id="precio-venta" step="0.01" min="0" required />
+        </div>
+        <div class="form-group">
+          <label for="cantidad-producto">Cantidad a ajustar (positivo para agregar, negativo para quitar):</label>
+          <input type="number" id="cantidad-producto" value="0" />
+        </div>
+        <div class="form-actions">
+          <button type="button" id="btn-limpiar-producto" class="btn-secondary">
+            <i class="fas fa-broom"></i> Limpiar
+          </button>
+          <button type="submit" class="btn-primary">
+            <i class="fas fa-save" aria-hidden="true"></i> Guardar Producto
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Costos y Ganancias -->
+    <section id="costos-ganancias" class="panel oculto" aria-labelledby="titulo-costos">
+      <h2 id="titulo-costos"><i class="fas fa-calculator" aria-hidden="true"></i> Costos de Inversión y Ganancia</h2>
+      <div class="time-filter">
+        <button class="filter-btn active" data-period="todo">Todo</button>
+        <button class="filter-btn" data-period="hoy">Hoy</button>
+        <button class="filter-btn" data-period="semana">Semana</button>
+        <button class="filter-btn" data-period="mes">Mes</button>
+        <button class="filter-btn" data-period="anio">Año</button>
+      </div>
+      <button id="btn-calcular-ganancias" class="btn-primary">
+        <i class="fas fa-calculator" aria-hidden="true"></i> Calcular
+      </button>
+      <div id="resultado-ganancias" aria-live="polite"></div>
+    </section>
+
+    <!-- Clientes en Atraso -->
+    <section id="clientes-atraso" class="panel oculto" aria-labelledby="titulo-atraso">
+      <h2 id="titulo-atraso"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i> Clientes en Atraso</h2>
+      <button id="btn-mostrar-atraso" class="btn-primary">
+        <i class="fas fa-list" aria-hidden="true"></i> Mostrar Clientes
+      </button>
+      <div id="lista-atraso" aria-live="polite"></div>
+    </section>
+
+    <!-- Crédito Disponible -->
+    <section id="credito-disponible" class="panel oculto" aria-labelledby="titulo-credito">
+      <h2 id="titulo-credito"><i class="fas fa-credit-card" aria-hidden="true"></i> Clientes con Crédito Disponible</h2>
+      <button id="btn-mostrar-credito" class="btn-primary">
+        <i class="fas fa-list" aria-hidden="true"></i> Mostrar Clientes
+      </button>
+      <div id="lista-credito" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <!-- Notificaciones Toast -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2025 DANY-SHOP. Sistema de gestión para pequeños negocios.</p>
+      <div class="footer-info">
+        <span id="ultima-actualizacion">Última actualización: --</span>
+        <span id="estado-sistema" class="status-online">
+          <i class="fas fa-circle"></i> Sistema en línea
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
